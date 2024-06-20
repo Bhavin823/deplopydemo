@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.box{
+    width: 60%;
+    margin:50px auto 0;
+    border: 5px solid black;
+    background-color: aqua;
+    
+}
+
+.textbox{
+    padding: 10px;
+    margin: 10ox;
+    color: black;
+    text-align: center;
+}
