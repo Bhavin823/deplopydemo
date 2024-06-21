@@ -1,5 +1,24 @@
-from django.shortcuts import render
-
+from django.shortcuts import render,redirect
+from demoapp.models import Employee
 # Create your views here.
 def demopage(request):
-    return render(request,'demoapp/demo.html')
+    employes = Employee.objects.all()
+    
+    context = {
+        'employee':employes,
+    }
+    return render(request,'demoapp/demo.html',context)
+
+def addEmployee(request):
+    if request.method == "POST":
+        employee = Employee()
+        employee.name = request.POST.get('name')
+        employee.age = request.POST.get('age')
+        employee.save()
+    
+    return redirect('demoapp')
+
+def deleteemployee(request,id):
+    emp = Employee.objects.get(pk=id)
+    emp.delete()
+    return redirect('demoapp')
