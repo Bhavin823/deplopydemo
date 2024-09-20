@@ -14,6 +14,10 @@ def addEmployee(request):
         employee = Employee()
         employee.name = request.POST.get('name')
         employee.age = request.POST.get('age')
+
+        if request.FILES != 0:
+            employee.image = request.FILES.get('image')
+        
         employee.save()
     
     return redirect('demoapp')
