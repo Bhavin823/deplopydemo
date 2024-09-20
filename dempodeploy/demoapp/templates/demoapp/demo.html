@@ -15,19 +15,22 @@
     <h1 class="textbox"><a href="{% url "admin:index" %}" style="text-decoration: none;">Admin</a></h1>
     
     <div class='box'>
-        <form class="form-inline" method="POST" action="{% url "addemp" %}">
+        <form class="form-inline" method="POST" action="{% url "addemp" %}" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="name">Name</label>
             <input type="text" id="name" placeholder="Enter Name" name="name" required>
             <label for="age">Age</label>
             <input type="text" id="age" placeholder="Enter age" name="age" required>
+            <input type="file" id="img" name="image" value="">
             <button type="submit">Submit</button>
         </form>
     </div>
 
     {% for emp in  employee %}
     <div class="box">
-        <h1 class="textbox">{{emp.name}} {{emp.age}}<a href="{% url "deleteemp" emp.id %}">&nbsp Delete</a></h1>
+        <div class="textbox">
+            {% if emp.image %}<img src="{{ emp.image.url }}" alt="{{emp.image}}" style="aspect-ratio: 4/3; width: 100px;">{% else %}{% endif %} <h1>{{emp.name}} {{emp.age}}<a href="{% url "deleteemp" emp.id %}">&nbsp Delete</a></h1>
+        </div>
     </div>
     {% endfor %}
 
