@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f@y49xj)t12*=+yativ7yt6-*^vw_vheup=9$4xp67&d+0#%h(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['demodeploy.pythonanywhere.com','13.201.225.92','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['demodeploy.pythonanywhere.com','localhost','127.0.0.1']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'demoapp',
+    'demoapp.apps.DemoappConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +81,18 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# connect db to aws prostgre
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'user_data',
+#         'USER': 'mysuperuser',
+#         'PASSWORD': 'mysuperuser',
+#         'HOST': 'demodb.c324uo6agrmf.ap-south-1.rds.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -126,6 +138,16 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL='/media/'
 MEDIA_ROOT= os.path.join(BASE_DIR,'media')
 
+# when DEBUG =False Media and statis setting
+# import os
+# STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
+# if DEBUG:
+#     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# else:
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -137,3 +159,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
 #     },
 # }
+
+# aws s3 bucket config
+# AWS_ACCESS_KEY_ID = 'AWS_ACCESS_KEY_ID '
+# AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY'
+# AWS_STORAGE_BUCKET_NAME = 'aws_bucket_name'
+# AWS_S3_SIGNATURE_NAME = 's3v4',
+# AWS_S3_REGION_NAME = 'region'
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL =  None
+# AWS_S3_VERITY = True
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
