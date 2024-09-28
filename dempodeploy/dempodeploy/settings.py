@@ -188,3 +188,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AWS_S3_VERITY = True
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+# setup cloudinary for media storage
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dyessa7rp',
+    'API_KEY': '392675816921432',
+    'API_SECRET': '5QfpqUpvhqXXi85OoQ_M0NplJMI',
+}
+
+# Use Cloudinary for media storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
