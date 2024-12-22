@@ -86,6 +86,7 @@ DATABASES = {
 import dj_database_url
 from decouple import config
 
+# railway postgresql db config
 DATABASES['default'] = dj_database_url.config(default=config('DATABASE_URL'))
 
 # connect db to aws prostgre
