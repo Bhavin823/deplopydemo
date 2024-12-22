@@ -1,4 +1,4 @@
-# deplopydemo# deploydemo
+# deploydemo
 
 This is a demo of a simple Django CRUD operation app. This app is deployed on Vercel.
 
@@ -37,51 +37,61 @@ This is a demo of a simple Django CRUD operation app. This app is deployed on Ve
     ```
 
 7. Deploy to Vercel:
-    - Install the Vercel CLI:
-        ```sh
-        npm install -g vercel
-        ```
-    - Link the project to Vercel:
-        ```sh
-        vercel
-        ```
-    - Deploy the project:
-        ```sh
-        vercel --prod
-        ```
+    - Ensure you have the following files in your repository:
+        - `build.sh`: Script to build the project.
+        - `runtime.txt`: Runtime configurations.
+        - `vercel.json`: Vercel configurations.
+          
+## Explanation of `build.sh`
 
-## Repository Structure
+The `build.sh` script is used to build the project before deployment. You may need to modify the following lines according to your project's requirements:
 
-- [dempodeploy](http://_vscodecontentref_/1)
-  - `.env`: Environment variables for the project.
-  - `build.sh`: Script to build the project.
-  - [db.sqlite3](http://_vscodecontentref_/2): SQLite database file.
-  - `demoapp/`: Contains the Django app.
-    - [__init__.py](http://_vscodecontentref_/3): Initializes the app.
-    - `admin.py`: Admin configurations.
-    - `apps.py`: App configurations.
-    - [migrations/](http://_vscodecontentref_/4): Database migrations.
-    - `models.py`: Database models.
-    - `signal.py`: Signal handlers.
-    - `templates/`: HTML templates.
-    - `tests.py`: Unit tests.
-    - `urls.py`: URL configurations.
-    - `views.py`: View functions.
-  - [dempodeploy](http://_vscodecontentref_/5): Contains the project settings.
-    - [__init__.py](http://_vscodecontentref_/6): Initializes the project.
-    - `asgi.py`: ASGI configurations.
-    - `settings.py`: Project settings.
-    - `urls.py`: URL configurations.
-    - `wsgi.py`: WSGI configurations.
-  - `manage.py`: Django management script.
-  - `media/`: Media files.
-    - `images/`: Image files.
-  - `requirements.txt`: Python dependencies.
-  - `runtime.txt`: Runtime configurations.
-  - `static/`: Static files.
-    - `demo.css`: CSS file.
-    - `demo.js`: JavaScript file.
-  - `staticfiles/`: Collected static files.
-  - `vercel.json`: Vercel configurations.
-- [README.md](http://_vscodecontentref_/7): Project documentation.
-- [venv](http://_vscodecontentref_/8): Virtual environment.
+```sh
+#!/bin/bash
+# filepath: /e:/deploydemo/build.sh
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run migrations
+python manage.py migrate
+
+# Collect static files
+python manage.py collectstatic --noinput 
+```
+
+## Explanation of `runtime.txt`
+The runtime.txt file specifies the Python runtime version to be used by Vercel. This ensures that the correct version of Python is used during deployment. For example:
+```sh
+
+python-3.12.4
+
+```
+
+Python version: Ensure the specified Python version matches the version used in your development environment to avoid compatibility issues.
+
+## Explanation of `vercel.json`
+The vercel.json file configures the Vercel deployment. You may need to modify the following lines according to your project's requirements:
+```sh
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "build.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/staticfiles/$1"
+    }
+  ]
+}
+```
+
+builds: Specifies the build script and the output directory. Ensure build.sh is correctly referenced and distDir points to the directory where static files are collected.
+routes: Defines routing rules. Modify the src and dest paths according to your project's structure and requirements.
